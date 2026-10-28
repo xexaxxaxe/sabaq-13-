@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Горный приют{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a class="logo" href="{{ url_for('search.index') }}">🏔️ Горный приют</a>
+      <nav class="nav">
+        <a href="{{ url_for('search.index') }}">Поиск номера</a>
+        {% if user %}
+          <a href="{{ url_for('bookings.my_bookings') }}">Мои брони</a>
+          <a href="{{ url_for('auth.logout') }}">Выйти ({{ user['username'] }})</a>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}">Вход</a>
+          <a href="{{ url_for('auth.register') }}">Регистрация</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% for message in messages %}
+        <div class="flash">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container">Урок 4 · Flask · учебная гостиница</div>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

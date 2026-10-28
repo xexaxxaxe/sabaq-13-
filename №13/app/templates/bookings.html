@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Мои брони{% endblock %}
+
+{% block content %}
+  <h1>Мои брони</h1>
+
+  {% if items %}
+    {% for item in items %}
+      {% set b = item['booking'] %}
+      <article class="card {% if not b.is_confirmed %}card--cancelled{% endif %}">
+        <div>
+          <h3>Бронь №{{ b.id }} · {{ item['room'].title }}</h3>
+          <p>{{ b.check_in|date }} — {{ b.check_out|date }} · {{ b.nights|nights }} · {{ b.guests|guests }}</p>
+          <p class="muted">
+            Сумма: {{ b.total|money }}{% if b.promo %} (промокод {{ b.promo }}){% endif %} ·
+            {% if not b.is_confirmed %}
+              отменена
+            {% elif item['can_cancel'] %}
+              бесплатная отмена до {{ item['deadline'].date()|date }}, {{ item['deadline'].strftime('%H:%M') }}
+            {% else %}
+              отменить уже нельзя
+            {% endif %}
+          </p>
+        </div>
+        {% if item['can_cancel'] %}
+          <form method="post" action="{{ url_for('bookings.cancel', booking_id=b.id) }}">
+            <button class="button--danger" type="submit">Отменить</button>
+          </form>
+        {% endif %}
+      </article>
+    {% endfor %}
+  {% else %}
+    <p class="muted">У вас пока нет броней. <a href="{{ url_for('search.index') }}">Найти номер</a></p>
+  {% endif %}
+{% endblock %}

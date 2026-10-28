@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{{ room.title }}{% endblock %}
+
+{% block content %}
+  <p><a href="{{ url_for('search.index', check_in=form['check_in'], check_out=form['check_out'], guests=form['guests']) }}">← К поиску</a></p>
+
+  <div class="room">
+    <div>
+      <h1>{{ room.title }}</h1>
+      <p class="muted">{{ room.floor }} этаж · до {{ room.capacity|guests }}</p>
+      <p>{{ room.description }}</p>
+      <ul class="rules">
+        <li>{{ room.price|money }} за ночь, в цену входят {{ cfg.INCLUDED_GUESTS|guests }}</li>
+        <li>каждый следующий гость — +{{ cfg.EXTRA_GUEST_FEE|money }} за ночь</li>
+        <li>ночи с пятницы на субботу и с субботы на воскресенье — +{{ cfg.WEEKEND_EXTRA_PERCENT }} %</li>
+        <li>от {{ cfg.LONG_STAY_NIGHTS|nights }} — скидка {{ cfg.LONG_STAY_PERCENT }} %</li>
+        <li>заезд с {{ cfg.CHECKIN_HOUR }}:00, выезд до {{ cfg.CHECKOUT_HOUR }}:00</li>
+        <li>бесплатная отмена — не позже чем за {{ cfg.FREE_CANCEL_HOURS }} часов до заезда</li>
+      </ul>
+    </div>
+
+    <form class="form" id="booking-form" method="post"
+          action="{{ url_for('bookings.book', room_id=room.id) }}" data-room="{{ room.id }}">
+      <label>Заезд
+        <input type="date" name="check_in" value="{{ form['check_in'] }}" min="{{ today }}" required>
+      </label>
+      <label>Выезд
+        <input type="date" name="check_out" value="{{ form['check_out'] }}" min="{{ today }}" required>
+      </label>
+      <label>Гостей
+        <input type="number" name="guests" value="{{ form['guests'] }}" min="1" max="{{ room.capacity }}" required>
+      </label>
+      <label>Промокод
+        <input type="text" name="promo" placeholder="если есть">
+      </label>
+
+      <div id="quote" class="quote"></div>
+
+      <button type="submit" id="book-button">Забронировать</button>
+      {% if not user %}
+        <p class="muted">Чтобы забронировать, нужно <a href="{{ url_for('auth.login') }}">войти</a>.</p>
+      {% endif %}
+    </form>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/quote.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,249 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f3f6f4;
+  color: #1f2a24;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: #2f6f4f;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+main.container {
+  flex: 1;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.header {
+  background: #2f6f4f;
+  color: #fff;
+}
+
+.header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.logo {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}
+
+.flash {
+  background: #fff3bf;
+  border-left: 4px solid #f59f00;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border-radius: 4px;
+}
+
+.muted {
+  color: #6c7a72;
+}
+
+.error {
+  color: #c92a2a;
+  font-weight: 600;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* ---------- Поиск ---------- */
+
+.search {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.search label,
+.form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* ---------- Карточки ---------- */
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-left: 5px solid #2f6f4f;
+}
+
+.card > div:first-child {
+  flex: 1;
+  min-width: 240px;
+}
+
+.card h2,
+.card h3,
+.card p {
+  margin: 0 0 6px;
+}
+
+.card__side {
+  text-align: right;
+}
+
+.card--cancelled {
+  border-left-color: #ced4da;
+  opacity: 0.7;
+}
+
+/* ---------- Номер ---------- */
+
+.room {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .room {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rules {
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  max-width: 420px;
+}
+
+.quote table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.quote td {
+  padding: 4px 0;
+  border-bottom: 1px solid #edf1ee;
+}
+
+.quote td:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.quote__sum td {
+  font-weight: 600;
+}
+
+.quote__total td {
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: none;
+}
+
+/* ---------- Поля и кнопки ---------- */
+
+input {
+  font: inherit;
+  font-weight: normal;
+  padding: 8px 10px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+}
+
+button,
+.button {
+  display: inline-block;
+  font: inherit;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #2f6f4f;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button--danger {
+  background: #495057;
+}
+
+.footer {
+  background: #e3e9e5;
+  color: #6c7a72;
+  font-size: 14px;
+  padding: 12px 0;
+}

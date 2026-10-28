@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Поиск номера{% endblock %}
+
+{% block content %}
+  <h1>Найти свободный номер</h1>
+
+  <form class="search" method="get" action="{{ url_for('search.index') }}">
+    <label>Заезд
+      <input type="date" name="check_in" value="{{ form['check_in'] }}" min="{{ today }}" required>
+    </label>
+    <label>Выезд
+      <input type="date" name="check_out" value="{{ form['check_out'] }}" min="{{ today }}" required>
+    </label>
+    <label>Гостей
+      <input type="number" name="guests" value="{{ form['guests'] }}" min="1" max="10" required>
+    </label>
+    <button type="submit">Найти</button>
+  </form>
+
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% elif results %}
+    <p class="muted">Свободно номеров: {{ results|length }}</p>
+    {% for item in results %}
+      {% set room = item['room'] %}
+      {% set q = item['quote'] %}
+      <article class="card">
+        <div>
+          <h2>{{ room.title }}</h2>
+          <p class="muted">{{ room.floor }} этаж · до {{ room.capacity|guests }} · {{ room.price|money }} за ночь</p>
+          <p>{{ room.description }}</p>
+        </div>
+        <div class="card__side">
+          <p class="price">{{ q.total|money }}</p>
+          <p class="muted">за {{ q.nights|length|nights }}</p>
+          <a class="button" href="{{ url_for('rooms.room_page', room_id=room.id, check_in=form['check_in'], check_out=form['check_out'], guests=form['guests']) }}">Выбрать</a>
+        </div>
+      </article>
+    {% endfor %}
+  {% else %}
+    <p class="muted">На эти даты свободных номеров нет. Попробуйте другие даты.</p>
+  {% endif %}
+{% endblock %}
